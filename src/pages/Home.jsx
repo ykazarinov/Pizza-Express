@@ -17,9 +17,10 @@ export default function Home() {
         setPizzas(json);
         setIsLoading(false);
       });
+    window.scrollTo(0, 0);
   }, []);
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -27,9 +28,9 @@ export default function Home() {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoading
-          ? [...new Array(10)].map((_, i) => <Skeleton key={i} />)
+          ? [...new Array(9)].map((_, i) => <Skeleton key={i} />)
           : pizzas && pizzas.map((obj) => <Pizzablock key={obj.id} {...obj} />)}
       </div>
-    </>
+    </div>
   );
 }
