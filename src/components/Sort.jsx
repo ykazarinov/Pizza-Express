@@ -1,11 +1,17 @@
 import React from 'react';
-export default function Sort() {
+export default function Sort({ sortValue, onChooseSort }) {
   const [isVisiblePopub, setIsVisiblePopup] = React.useState(false);
-  const sortValues = ['популярности', 'цене', 'алфавиту'];
-  const [actualSortValue, setActualSortValue] = React.useState(sortValues[0]);
+  const sortValues = [
+    { name: 'популярности', sort: 'raiting' },
+    { name: 'цене', sort: 'price' },
+    { name: 'алфавиту', sort: 'title' },
+  ];
+  // const [actualSortValue, setActualSortValue] = React.useState(sortValues[0]);
+
+  // const sortName = sortValues[sortValue].name;
 
   const sortClick = (el) => {
-    setActualSortValue(el);
+    onChooseSort(el);
     setIsVisiblePopup(false);
   };
 
@@ -24,17 +30,17 @@ export default function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisiblePopup(!isVisiblePopub)}>{actualSortValue}</span>
+        <span onClick={() => setIsVisiblePopup(!isVisiblePopub)}>{sortValue.name}</span>
       </div>
       {isVisiblePopub && (
         <div className="sort__popup">
           <ul>
             {sortValues.map((el, i) => (
               <li
-                className={el === actualSortValue ? 'active' : ''}
+                className={sortValue.sort === el.sort ? 'active' : ''}
                 onClick={() => sortClick(el)}
                 key={i}>
-                {el}
+                {el.name}
               </li>
             ))}
             {/* <li className="active">популярности</li>
