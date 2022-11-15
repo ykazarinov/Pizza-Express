@@ -6,8 +6,18 @@
     display: flex;
     align-items: center;
 
-    svg {
+    .sort__direction {
       margin-right: 8px;
+      padding: 10px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .ascending {
+        transform: rotate(180deg);
+      }
     }
 
     b {
