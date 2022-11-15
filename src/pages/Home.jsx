@@ -27,18 +27,7 @@ export default function Home() {
     setIsLoading(true);
     const search = searchValue ? `&search=${searchValue}` : '';
     const direction = isDescending ? '&order=desc' : '&order=asc';
-    // fetch(
-    //   `https://63692f3815219b849611dc7a.mockapi.io/items?page=${currentPage}&limit=4&${
-    //     categoryId > 0 ? `category=${categoryId}` : ''
-    //   }&sortBy=${sortType.sort}${direction}${search}`,
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((json) => {
-    //     setPizzas(json);
-    //     setIsLoading(false);
-    //   });
+
     axios
       .get(
         `https://63692f3815219b849611dc7a.mockapi.io/items?page=${currentPage}&limit=4&${

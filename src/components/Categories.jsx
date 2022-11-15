@@ -8,8 +8,6 @@ export default function Categories() {
 
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-  console.log(categoryId);
-
   return (
     <div className="categories">
       <ul>
