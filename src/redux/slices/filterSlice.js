@@ -9,7 +9,7 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     setCategoryId: (state, action) => {
-      state.categoryId = action.payload;
+      state.categoryId = Number(action.payload);
     },
   },
 });

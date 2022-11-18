@@ -2,15 +2,17 @@ import React from 'react';
 import { onChooseSort, setIsVisiblePopup, setIsDescending } from '../redux/slices/sortSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export default function Sort() {
-  const sortValues = [
-    { name: 'популярности', sort: 'raiting' },
-    { name: 'цене', sort: 'price' },
-    { name: 'алфавиту', sort: 'title' },
-  ];
+export const sortValues = [
+  { name: 'популярности', sort: 'rating' },
+  { name: 'цене', sort: 'price' },
+  { name: 'алфавиту', sort: 'title' },
+];
 
+export default function Sort() {
   const sortType = useSelector((state) => state.sort.sortType);
   const dispatch = useDispatch();
+
+  const sortRef = React.useRef();
 
   const isVisiblePopup = useSelector((state) => state.sort.isVisiblePopup);
   const isDescending = useSelector((state) => state.sort.isDescending);
@@ -20,8 +22,24 @@ export default function Sort() {
     dispatch(setIsVisiblePopup(false));
   };
 
+  React.useEffect(() => {
+    const hendleClickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        dispatch(setIsVisiblePopup(false));
+      }
+    };
+
+    document.body.addEventListener('click', hendleClickOutside);
+
+    // unmount
+    return () => {
+      // delete eventListener
+      document.body.removeEventListener('click', hendleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <div className="sort__direction" onClick={() => dispatch(setIsDescending())}>
           <svg

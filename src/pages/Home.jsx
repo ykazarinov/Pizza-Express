@@ -6,15 +6,27 @@ import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination';
 
 import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPage } from '../redux/slices/paginationSlice';
+
+import { setCategoryId } from '../redux/slices/filterSlice';
+import { onChooseSort } from '../redux/slices/sortSlice';
+
+import { sortValues } from '../components/Sort';
 
 export default function Home() {
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const dispatch = useDispatch();
+
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
+
+  const navigate = useNavigate();
 
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const sortType = useSelector((state) => state.sort.sortType);
@@ -23,7 +35,37 @@ export default function Home() {
 
   const isDescending = useSelector((state) => state.sort.isDescending);
 
+  // if we changed parameters and it was first render
   React.useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sortType.sort,
+        categoryId,
+        currentPage,
+      });
+      // console.log(queryString);
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sortType, searchValue, currentPage, isDescending]);
+
+  // if the first render was made then we check URL-parameters and save in Redux
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+
+      const sort = sortValues.find((obj) => obj.sort === params.sortProperty);
+
+      console.log(sort);
+      dispatch(setCategoryId(params.categoryId));
+      dispatch(setCurrentPage(params.currentPage));
+      dispatch(onChooseSort(sort));
+
+      isSearch.current = true;
+    }
+  }, []);
+
+  const fetchPizzas = () => {
     setIsLoading(true);
     const search = searchValue ? `&search=${searchValue}` : '';
     const direction = isDescending ? '&order=desc' : '&order=asc';
@@ -38,7 +80,16 @@ export default function Home() {
         setPizzas(res.data);
         setIsLoading(false);
       });
+  };
+
+  // If it was first render, then we ask pizzas from API
+  React.useEffect(() => {
+    // fetchPizzas();
     window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+    isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage, isDescending]);
 
   const filteredPizzas = pizzas
