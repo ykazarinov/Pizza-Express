@@ -25,6 +25,9 @@ export const sortSlice = createSlice({
   },
 });
 
+export const selectIsVisiblePopup = (state) => state.sort.isVisiblePopup;
+export const selectIsDescending = (state) => state.sort.isDescending;
+export const selectSortType = (state) => state.sort.sortType;
 export const { onChooseSort, setIsVisiblePopup, setIsDescending } = sortSlice.actions;
 
 export default sortSlice.reducer;

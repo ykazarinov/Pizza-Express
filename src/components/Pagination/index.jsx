@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './Pagination.module.scss';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
+import { selectPaginationCurrentPage } from '../../redux/slices/paginationSlice';
 
 export const Pagination = ({ onChangePage }) => {
-  const currentPage = useSelector((state) => state.pagination.currentPage);
+  const currentPage = useSelector(selectPaginationCurrentPage);
   return (
     <ReactPaginate
       className={styles.root}

@@ -14,6 +14,7 @@ export const filterSlice = createSlice({
   },
 });
 
+export const selectFilterCategoryId = (state) => state.filter.categoryId;
 export const { setCategoryId } = filterSlice.actions;
 
 export default filterSlice.reducer;

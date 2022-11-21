@@ -5,20 +5,21 @@ import Pizzablock from '../components/Pizzablock';
 import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination';
 
-import axios from 'axios';
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPage } from '../redux/slices/paginationSlice';
+import { selectPaginationCurrentPage, setCurrentPage } from '../redux/slices/paginationSlice';
 
-import { setCategoryId } from '../redux/slices/filterSlice';
-import { onChooseSort } from '../redux/slices/sortSlice';
+import { selectFilterCategoryId, setCategoryId } from '../redux/slices/filterSlice';
+import { onChooseSort, selectIsDescending, selectSortType } from '../redux/slices/sortSlice';
 
 import { sortValues } from '../components/Sort';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { selectSearchValue } from '../redux/slices/searchSlice';
 
 export default function Home() {
-  const [pizzas, setPizzas] = React.useState([]);
+  // const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const dispatch = useDispatch();
@@ -28,12 +29,14 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-  const currentPage = useSelector((state) => state.pagination.currentPage);
-  const sortType = useSelector((state) => state.sort.sortType);
-  const searchValue = useSelector((state) => state.search.searchValue);
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const currentPage = useSelector(selectPaginationCurrentPage);
+  const sortType = useSelector(selectSortType);
+  const searchValue = useSelector(selectSearchValue);
+  const categoryId = useSelector(selectFilterCategoryId);
 
-  const isDescending = useSelector((state) => state.sort.isDescending);
+  const { items, status } = useSelector(selectPizzaData);
+
+  const isDescending = useSelector(selectIsDescending);
 
   // if we changed parameters and it was first render
   React.useEffect(() => {
@@ -56,7 +59,6 @@ export default function Home() {
 
       const sort = sortValues.find((obj) => obj.sort === params.sortProperty);
 
-      console.log(sort);
       dispatch(setCategoryId(params.categoryId));
       dispatch(setCurrentPage(params.currentPage));
       dispatch(onChooseSort(sort));
@@ -65,21 +67,12 @@ export default function Home() {
     }
   }, []);
 
-  const fetchPizzas = () => {
+  const getPizzas = async () => {
     setIsLoading(true);
     const search = searchValue ? `&search=${searchValue}` : '';
     const direction = isDescending ? '&order=desc' : '&order=asc';
 
-    axios
-      .get(
-        `https://63692f3815219b849611dc7a.mockapi.io/items?page=${currentPage}&limit=4&${
-          categoryId > 0 ? `category=${categoryId}` : ''
-        }&sortBy=${sortType.sort}${direction}${search}`,
-      )
-      .then((res) => {
-        setPizzas(res.data);
-        setIsLoading(false);
-      });
+    dispatch(fetchPizzas({ search, direction, currentPage, categoryId, sortType }));
   };
 
   // If it was first render, then we ask pizzas from API
@@ -87,14 +80,18 @@ export default function Home() {
     // fetchPizzas();
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage, isDescending]);
 
-  const filteredPizzas = pizzas
+  const filteredPizzas = items
     // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => <Pizzablock key={obj.id} {...obj} />);
+    .map((obj) => (
+      <Link key={obj.id} to={`pizza/${obj.id}`}>
+        <Pizzablock {...obj} />
+      </Link>
+    ));
   const skeletons = [...new Array(9)].map((_, i) => <Skeleton key={i} />);
 
   return (
@@ -104,7 +101,17 @@ export default function Home() {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas && filteredPizzas}</div>
+      {status === 'error' ? (
+        <div className="content__error_info">
+          <h2>Pizza loading error</h2>
+          <p>Failed to load pizzas. Please try again later</p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading' ? skeletons : items && filteredPizzas}
+        </div>
+      )}
+
       <Pagination onChangePage={(number) => dispatch(setCurrentPage(number))} />
     </div>
   );

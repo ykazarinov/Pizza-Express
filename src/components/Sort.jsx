@@ -1,5 +1,12 @@
 import React from 'react';
-import { onChooseSort, setIsVisiblePopup, setIsDescending } from '../redux/slices/sortSlice';
+import {
+  onChooseSort,
+  setIsVisiblePopup,
+  setIsDescending,
+  selectSortType,
+  selectIsDescending,
+  selectIsVisiblePopup,
+} from '../redux/slices/sortSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const sortValues = [
@@ -9,13 +16,13 @@ export const sortValues = [
 ];
 
 export default function Sort() {
-  const sortType = useSelector((state) => state.sort.sortType);
+  const sortType = useSelector(selectSortType);
   const dispatch = useDispatch();
 
   const sortRef = React.useRef();
 
-  const isVisiblePopup = useSelector((state) => state.sort.isVisiblePopup);
-  const isDescending = useSelector((state) => state.sort.isDescending);
+  const isVisiblePopup = useSelector(selectIsVisiblePopup);
+  const isDescending = useSelector(selectIsDescending);
 
   const sortClick = (el) => {
     dispatch(onChooseSort(el));
