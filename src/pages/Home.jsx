@@ -87,11 +87,7 @@ export default function Home() {
 
   const filteredPizzas = items
     // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => (
-      <Link key={obj.id} to={`pizza/${obj.id}`}>
-        <Pizzablock {...obj} />
-      </Link>
-    ));
+    .map((obj) => <Pizzablock key={obj.id} {...obj} />);
   const skeletons = [...new Array(9)].map((_, i) => <Skeleton key={i} />);
 
   return (
