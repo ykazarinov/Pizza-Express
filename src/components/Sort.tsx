@@ -9,28 +9,30 @@ import {
 } from '../redux/slices/sortSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export const sortValues = [
+type SortItem = { name: string; sort: string };
+
+export const sortValues: SortItem[] = [
   { name: 'популярности', sort: 'rating' },
   { name: 'цене', sort: 'price' },
   { name: 'алфавиту', sort: 'title' },
 ];
 
-export default function Sort() {
+const Sort: React.FC = () => {
   const sortType = useSelector(selectSortType);
   const dispatch = useDispatch();
 
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const isVisiblePopup = useSelector(selectIsVisiblePopup);
   const isDescending = useSelector(selectIsDescending);
 
-  const sortClick = (el) => {
+  const sortClick = (el: SortItem) => {
     dispatch(onChooseSort(el));
     dispatch(setIsVisiblePopup(false));
   };
 
   React.useEffect(() => {
-    const hendleClickOutside = (event) => {
+    const hendleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         dispatch(setIsVisiblePopup(false));
       }
@@ -81,4 +83,6 @@ export default function Sort() {
       )}
     </div>
   );
-}
+};
+
+export default Sort;

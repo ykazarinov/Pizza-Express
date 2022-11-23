@@ -4,7 +4,11 @@ import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { selectPaginationCurrentPage } from '../../redux/slices/paginationSlice';
 
-export const Pagination = ({ onChangePage }) => {
+type PaginationProps = {
+  onChangePage: any;
+};
+
+const Pagination: React.FC<PaginationProps> = ({ onChangePage }) => {
   const currentPage = useSelector(selectPaginationCurrentPage);
   return (
     <ReactPaginate
@@ -16,7 +20,7 @@ export const Pagination = ({ onChangePage }) => {
       pageCount={3}
       forcePage={currentPage - 1}
       previousLabel="<"
-      renderOnZeroPageCount={null}
+      // renderOnZeroPageCount={null}
     />
   );
 };

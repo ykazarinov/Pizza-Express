@@ -6,7 +6,7 @@ import Skeleton from '../components/Pizzablock/Skeleton';
 import Pagination from '../components/Pagination';
 
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPaginationCurrentPage, setCurrentPage } from '../redux/slices/paginationSlice';
@@ -18,7 +18,7 @@ import { sortValues } from '../components/Sort';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { selectSearchValue } from '../redux/slices/searchSlice';
 
-export default function Home() {
+const Home: React.FC = () => {
   // const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -72,7 +72,10 @@ export default function Home() {
     const search = searchValue ? `&search=${searchValue}` : '';
     const direction = isDescending ? '&order=desc' : '&order=asc';
 
-    dispatch(fetchPizzas({ search, direction, currentPage, categoryId, sortType }));
+    dispatch(
+      //@ts-ignore
+      fetchPizzas({ search, direction, currentPage, categoryId, sortType }),
+    );
   };
 
   // If it was first render, then we ask pizzas from API
@@ -87,7 +90,7 @@ export default function Home() {
 
   const filteredPizzas = items
     // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => <Pizzablock key={obj.id} {...obj} />);
+    .map((obj: any) => <Pizzablock key={obj.id} {...obj} />);
   const skeletons = [...new Array(9)].map((_, i) => <Skeleton key={i} />);
 
   return (
@@ -108,7 +111,9 @@ export default function Home() {
         </div>
       )}
 
-      <Pagination onChangePage={(number) => dispatch(setCurrentPage(number))} />
+      <Pagination onChangePage={(page: number) => dispatch(setCurrentPage(page))} />
     </div>
   );
-}
+};
+
+export default Home;

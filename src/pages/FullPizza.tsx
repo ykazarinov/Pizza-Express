@@ -2,9 +2,13 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export const FullPizza = () => {
+const FullPizza: React.FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = React.useState('');
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const navagate = useNavigate();
 
   React.useEffect(() => {
@@ -22,7 +26,7 @@ export const FullPizza = () => {
   }, []);
 
   if (!pizza) {
-    return 'Upload pizza...';
+    return <>'Upload pizza...'</>;
   }
   return (
     <div className="container">

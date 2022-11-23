@@ -5,7 +5,16 @@ import { Link } from 'react-router-dom';
 
 const typesNames = ['Тонкое', 'Традиционное'];
 
-export default function Pizzablock({ id, title, price, imageUrl, sizes, types }) {
+type PizzablockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const Pizzablock: React.FC<PizzablockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
 
@@ -84,4 +93,6 @@ export default function Pizzablock({ id, title, price, imageUrl, sizes, types })
       </div>
     </div>
   );
-}
+};
+
+export default Pizzablock;
