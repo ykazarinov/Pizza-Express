@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectPaginationCurrentPage } from '../../redux/slices/paginationSlice';
 
 type PaginationProps = {
-  onChangePage: any;
+  onChangePage: (page: number) => void;
 };
 
 const Pagination: React.FC<PaginationProps> = ({ onChangePage }) => {

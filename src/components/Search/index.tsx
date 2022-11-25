@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 
 import styles from './Search.module.scss';
 import { setSearchValue } from '../../redux/slices/searchSlice';
@@ -19,7 +19,7 @@ const Search: React.FC = () => {
     [],
   );
 
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -46,7 +46,7 @@ const Search: React.FC = () => {
         ref={inputRef}
         value={value}
         placeholder="Recherche de pizzas"
-        onInput={(event) => onChangeInput(event)}
+        onInput={onChangeInput}
       />
       {value && (
         <svg

@@ -6,15 +6,20 @@ import {
   selectSortType,
   selectIsDescending,
   selectIsVisiblePopup,
+  SortPropertyEnum,
+  SortType,
 } from '../redux/slices/sortSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-type SortItem = { name: string; sort: string };
+// type SortItem = {
+//   name: string;
+//   sortProperty: SortPropertyEnum;
+// };
 
-export const sortValues: SortItem[] = [
-  { name: 'популярности', sort: 'rating' },
-  { name: 'цене', sort: 'price' },
-  { name: 'алфавиту', sort: 'title' },
+export const sortValues: SortType[] = [
+  { name: 'популярности', sortProperty: SortPropertyEnum.RATING },
+  { name: 'цене', sortProperty: SortPropertyEnum.PRICE },
+  { name: 'алфавиту', sortProperty: SortPropertyEnum.TITLE },
 ];
 
 const Sort: React.FC = () => {
@@ -26,14 +31,14 @@ const Sort: React.FC = () => {
   const isVisiblePopup = useSelector(selectIsVisiblePopup);
   const isDescending = useSelector(selectIsDescending);
 
-  const sortClick = (el: SortItem) => {
+  const sortClick = (el: SortType) => {
     dispatch(onChooseSort(el));
     dispatch(setIsVisiblePopup(false));
   };
 
   React.useEffect(() => {
-    const hendleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const hendleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         dispatch(setIsVisiblePopup(false));
       }
     };
@@ -52,7 +57,7 @@ const Sort: React.FC = () => {
       <div className="sort__label">
         <div className="sort__direction" onClick={() => dispatch(setIsDescending())}>
           <svg
-            className={isDescending ? '' : 'ascending'}
+            className={!isDescending ? '' : 'descending'}
             width="10"
             height="6"
             viewBox="0 0 10 6"
@@ -72,7 +77,7 @@ const Sort: React.FC = () => {
           <ul>
             {sortValues.map((el, i) => (
               <li
-                className={sortType.sort === el.sort ? 'active' : ''}
+                className={sortType.sortProperty === el.sortProperty ? 'active' : ''}
                 onClick={() => sortClick(el)}
                 key={i}>
                 {el.name}

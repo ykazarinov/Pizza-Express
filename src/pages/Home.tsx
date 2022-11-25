@@ -8,21 +8,27 @@ import Pagination from '../components/Pagination';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectPaginationCurrentPage, setCurrentPage } from '../redux/slices/paginationSlice';
 
 import { selectFilterCategoryId, setCategoryId } from '../redux/slices/filterSlice';
-import { onChooseSort, selectIsDescending, selectSortType } from '../redux/slices/sortSlice';
+import {
+  onChooseSort,
+  selectIsDescending,
+  selectSortType,
+  setOrder,
+} from '../redux/slices/sortSlice';
 
 import { sortValues } from '../components/Sort';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
-import { selectSearchValue } from '../redux/slices/searchSlice';
+import { fetchPizzas, FetchPizzasArgs, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { selectSearchValue, setSearchValue } from '../redux/slices/searchSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   // const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
@@ -42,12 +48,18 @@ const Home: React.FC = () => {
   React.useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
-        sortProperty: sortType.sort,
+        sortProperty: sortType.sortProperty,
         categoryId,
         currentPage,
+        order: isDescending ? 'desc' : 'asc',
+        search: searchValue,
       });
-      // console.log(queryString);
+
       navigate(`?${queryString}`);
+    }
+
+    if (!window.location.search) {
+      dispatch(fetchPizzas({} as FetchPizzasArgs));
     }
     isMounted.current = true;
   }, [categoryId, sortType, searchValue, currentPage, isDescending]);
@@ -57,11 +69,14 @@ const Home: React.FC = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
 
-      const sort = sortValues.find((obj) => obj.sort === params.sortProperty);
+      const sort = sortValues.find((obj) => obj.sortProperty === params.sortProperty);
+      const order = params.order === 'desc' ? true : false;
 
-      dispatch(setCategoryId(params.categoryId));
-      dispatch(setCurrentPage(params.currentPage));
-      dispatch(onChooseSort(sort));
+      params.categoryId && dispatch(setCategoryId(Number(params.categoryId)));
+      params.currentPage && dispatch(setCurrentPage(Number(params.currentPage)));
+      sort && dispatch(onChooseSort(sort));
+      params.order && dispatch(setOrder(order));
+      params.search && dispatch(setSearchValue(String(params.search)));
 
       isSearch.current = true;
     }
@@ -69,13 +84,11 @@ const Home: React.FC = () => {
 
   const getPizzas = async () => {
     setIsLoading(true);
-    const search = searchValue ? `&search=${searchValue}` : '';
+
+    const search = searchValue ? searchValue : '';
     const direction = isDescending ? '&order=desc' : '&order=asc';
 
-    dispatch(
-      //@ts-ignore
-      fetchPizzas({ search, direction, currentPage, categoryId, sortType }),
-    );
+    dispatch(fetchPizzas({ search, direction, currentPage, categoryId, sortType }));
   };
 
   // If it was first render, then we ask pizzas from API
@@ -111,7 +124,12 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      <Pagination onChangePage={(page: number) => dispatch(setCurrentPage(page))} />
+      <Pagination
+        onChangePage={(page: number) => {
+          // dispatch({ type: '111', payload: 3243 });
+          dispatch(setCurrentPage(page));
+        }}
+      />
     </div>
   );
 };
