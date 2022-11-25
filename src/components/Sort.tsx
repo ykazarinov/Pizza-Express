@@ -3,7 +3,6 @@ import {
   onChooseSort,
   setIsVisiblePopup,
   setIsDescending,
-  selectSortType,
   selectIsDescending,
   selectIsVisiblePopup,
   SortPropertyEnum,
@@ -11,19 +10,17 @@ import {
 } from '../redux/slices/sortSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-// type SortItem = {
-//   name: string;
-//   sortProperty: SortPropertyEnum;
-// };
-
 export const sortValues: SortType[] = [
   { name: 'популярности', sortProperty: SortPropertyEnum.RATING },
   { name: 'цене', sortProperty: SortPropertyEnum.PRICE },
   { name: 'алфавиту', sortProperty: SortPropertyEnum.TITLE },
 ];
 
-const Sort: React.FC = () => {
-  const sortType = useSelector(selectSortType);
+type SortPopupProps = {
+  value: SortType;
+};
+
+const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
 
   const sortRef = React.useRef<HTMLDivElement>(null);
@@ -70,14 +67,14 @@ const Sort: React.FC = () => {
           </svg>
         </div>
         <b>Сортировка по:</b>
-        <span onClick={() => dispatch(setIsVisiblePopup(!isVisiblePopup))}>{sortType.name}</span>
+        <span onClick={() => dispatch(setIsVisiblePopup(!isVisiblePopup))}>{value.name}</span>
       </div>
       {isVisiblePopup && (
         <div className="sort__popup">
           <ul>
             {sortValues.map((el, i) => (
               <li
-                className={sortType.sortProperty === el.sortProperty ? 'active' : ''}
+                className={value.sortProperty === el.sortProperty ? 'active' : ''}
                 onClick={() => sortClick(el)}
                 key={i}>
                 {el.name}
@@ -88,6 +85,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

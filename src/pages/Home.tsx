@@ -101,16 +101,14 @@ const Home: React.FC = () => {
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage, isDescending]);
 
-  const filteredPizzas = items
-    // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj: any) => <Pizzablock key={obj.id} {...obj} />);
+  const filteredPizzas = items.map((obj: any) => <Pizzablock key={obj.id} {...obj} />);
   const skeletons = [...new Array(9)].map((_, i) => <Skeleton key={i} />);
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories />
-        <Sort />
+        <Sort value={sortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (

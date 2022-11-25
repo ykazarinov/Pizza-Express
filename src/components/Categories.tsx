@@ -4,7 +4,7 @@ import { selectFilterCategoryId, setCategoryId } from '../redux/slices/filterSli
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-const Categories: React.FC = () => {
+const Categories: React.FC = React.memo(() => {
   const categoryId = useSelector(selectFilterCategoryId);
   const dispatch = useDispatch();
 
@@ -22,6 +22,6 @@ const Categories: React.FC = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

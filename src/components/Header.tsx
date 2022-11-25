@@ -3,15 +3,26 @@ import logo from '../assets/images/pizza-logo.svg';
 import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
+import React from 'react';
 
 const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
+  const isMounted = React.useRef(false); // we checking: if the component has already been rendered before
 
   const { pathname } = useLocation();
 
   const totalCount = items.reduce((sum: number, item: any) => {
     return item.count + sum;
   }, 0);
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [items]);
+
   return (
     <div className="header">
       <div className="container">
@@ -24,7 +35,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        <Search />
+        {pathname !== '/cart' && <Search />}
         <div className="header__cart">
           {pathname !== '/cart' && (
             <Link to="/cart" className="button button--cart">
