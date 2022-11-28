@@ -1,10 +1,9 @@
-import React, { ChangeEventHandler } from 'react';
-
 import styles from './Search.module.scss';
-import { setSearchValue } from '../../redux/slices/searchSlice';
+import { setSearchValue } from '../../redux/search/slice';
 import { useDispatch } from 'react-redux';
 
 import debounce from 'lodash.debounce';
+import React from 'react';
 
 const Search: React.FC = () => {
   const [value, setValue] = React.useState('');

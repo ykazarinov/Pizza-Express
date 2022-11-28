@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Pagination.module.scss';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import { selectPaginationCurrentPage } from '../../redux/slices/paginationSlice';
+import { selectPaginationCurrentPage } from '../../redux/pagination/selectors';
 
 type PaginationProps = {
   onChangePage: (page: number) => void;

@@ -1,3 +1,4 @@
+import { CartItem } from '../redux/cart/types';
 import { calcTotalPrice } from './calcTotalPrice';
 
 export const getCartFromLS = () => {
@@ -6,7 +7,7 @@ export const getCartFromLS = () => {
   const totalPrice = calcTotalPrice(items);
   //   if (items.length) {
   return {
-    items,
+    items: items as CartItem[],
     totalPrice,
   };
   //   }

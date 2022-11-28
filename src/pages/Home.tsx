@@ -9,20 +9,22 @@ import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import { selectPaginationCurrentPage, setCurrentPage } from '../redux/slices/paginationSlice';
+import { setCurrentPage } from '../redux/pagination/slice';
 
-import { selectFilterCategoryId, setCategoryId } from '../redux/slices/filterSlice';
-import {
-  onChooseSort,
-  selectIsDescending,
-  selectSortType,
-  setOrder,
-} from '../redux/slices/sortSlice';
+import { setCategoryId } from '../redux/filter/slice';
+import { onChooseSort, setOrder } from '../redux/sort/slice';
 
 import { sortValues } from '../components/Sort';
-import { fetchPizzas, FetchPizzasArgs, selectPizzaData } from '../redux/slices/pizzaSlice';
-import { selectSearchValue, setSearchValue } from '../redux/slices/searchSlice';
+
+import { setSearchValue } from '../redux/search/slice';
 import { useAppDispatch } from '../redux/store';
+import { selectPaginationCurrentPage } from '../redux/pagination/selectors';
+import { selectIsDescending, selectSortType } from '../redux/sort/selectors';
+import { selectSearchValue } from '../redux/search/selectors';
+import { selectFilterCategoryId } from '../redux/filter/selectors';
+import { selectPizzaData } from '../redux/pizza/selectors';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
+import { FetchPizzasArgs } from '../redux/pizza/types';
 
 const Home: React.FC = () => {
   // const [pizzas, setPizzas] = React.useState([]);

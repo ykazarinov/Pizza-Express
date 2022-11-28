@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  onChooseSort,
-  setIsVisiblePopup,
-  setIsDescending,
-  selectIsDescending,
-  selectIsVisiblePopup,
-  SortPropertyEnum,
-  SortType,
-} from '../redux/slices/sortSlice';
+
 import { useSelector, useDispatch } from 'react-redux';
+import { selectIsDescending, selectIsVisiblePopup } from '../redux/sort/selectors';
+import { onChooseSort, setIsDescending, setIsVisiblePopup } from '../redux/sort/slice';
+import { SortPropertyEnum, SortType } from '../redux/sort/types';
 
 export const sortValues: SortType[] = [
   { name: 'популярности', sortProperty: SortPropertyEnum.RATING },

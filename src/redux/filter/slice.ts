@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-
-interface FilterSliceState {
-  categoryId: number;
-}
+import { FilterSliceState } from './types';
 
 const initialState: FilterSliceState = {
   categoryId: 0,
@@ -19,7 +15,6 @@ export const filterSlice = createSlice({
   },
 });
 
-export const selectFilterCategoryId = (state: RootState) => state.filter.categoryId;
 export const { setCategoryId } = filterSlice.actions;
 
 export default filterSlice.reducer;

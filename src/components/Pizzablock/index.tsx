@@ -1,8 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, CartItem, selectCartItemById } from '../../redux/slices/cartSlice';
+import { addItem } from '../../redux/cart/slice';
+import { selectCartItemById } from '../../redux/cart/selectors';
+import { CartItem } from '../../redux/cart/types';
+
 import { Link } from 'react-router-dom';
-import { Pizza } from '../../redux/slices/pizzaSlice';
+import { Pizza } from '../../redux/pizza/types';
 
 const typesNames = ['Тонкое', 'Традиционное'];
 
