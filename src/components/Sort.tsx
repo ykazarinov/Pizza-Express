@@ -6,9 +6,9 @@ import { onChooseSort, setIsDescending, setIsVisiblePopup } from '../redux/sort/
 import { SortPropertyEnum, SortType } from '../redux/sort/types';
 
 export const sortValues: SortType[] = [
-  { name: 'популярности', sortProperty: SortPropertyEnum.RATING },
-  { name: 'цене', sortProperty: SortPropertyEnum.PRICE },
-  { name: 'алфавиту', sortProperty: SortPropertyEnum.TITLE },
+  { name: 'popularity', sortProperty: SortPropertyEnum.RATING },
+  { name: 'price', sortProperty: SortPropertyEnum.PRICE },
+  { name: 'alphabet', sortProperty: SortPropertyEnum.TITLE },
 ];
 
 type SortPopupProps = {
@@ -61,7 +61,7 @@ const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
             />
           </svg>
         </div>
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         <span onClick={() => dispatch(setIsVisiblePopup(!isVisiblePopup))}>{value.name}</span>
       </div>
       {isVisiblePopup && (

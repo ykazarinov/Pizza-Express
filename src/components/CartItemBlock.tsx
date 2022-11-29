@@ -45,7 +45,7 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
       <div className="cart__item-info">
         <h3>{title}</h3>
         <p>
-          {type}, {size} см.
+          {type}, {size} cm.
         </p>
       </div>
       <div className="cart__item-count">
@@ -90,7 +90,7 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
         </button>
       </div>
       <div className="cart__item-price">
-        <b>{price * count} ₽</b>
+        <b>${price * count}</b>
       </div>
       <div className="cart__item-remove">
         <div onClick={onClickRemove} className="button button--outline button--circle">

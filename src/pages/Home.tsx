@@ -1,9 +1,5 @@
 import React from 'react';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import Pizzablock from '../components/Pizzablock';
-import Skeleton from '../components/Pizzablock/Skeleton';
-import Pagination from '../components/Pagination';
+import { Categories, Sort, Pizzablock, Skeleton, Pagination } from '../components';
 
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
@@ -112,7 +108,7 @@ const Home: React.FC = () => {
         <Categories />
         <Sort value={sortType} />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">All pizzas</h2>
       {status === 'error' ? (
         <div className="content__error_info">
           <h2>Pizza loading error</h2>

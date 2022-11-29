@@ -3,7 +3,7 @@ import { SortPropertyEnum, SortSliceState, SortType } from './types';
 
 const initialState: SortSliceState = {
   sortType: {
-    name: 'популярности',
+    name: 'popularity',
     sortProperty: SortPropertyEnum.RATING,
   },
   isVisiblePopup: false,

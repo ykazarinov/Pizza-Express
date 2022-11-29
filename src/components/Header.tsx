@@ -30,8 +30,8 @@ const Header: React.FC = () => {
           <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
-              <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
+              <h1>Pizza Shop</h1>
+              <p>Fast and tasty!</p>
             </div>
           </div>
         </Link>
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
         <div className="header__cart">
           {pathname !== '/cart' && (
             <Link to="/cart" className="button button--cart">
-              <span>{totalPrice} ₽</span>
+              <span>${totalPrice}</span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"
