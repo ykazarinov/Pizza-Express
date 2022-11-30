@@ -29,13 +29,17 @@ const AddCartButton: React.FC<activePizza> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const cartItem = useSelector(selectCartItemById(id));
-  const addedCount = cartItem ? cartItem.count : 0;
+  const cartItems = useSelector(selectCartItemById(id));
+  const addedCount = cartItems
+    ? cartItems.reduce((sum: number, obj: CartItem) => obj.count + sum, 0)
+    : 0;
   const onClickAdd = () => {
     const item: CartItem = {
       id,
       title,
-      price,
+      price: Number(
+        (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(2),
+      ),
       imageUrl,
       type: options.typesNames[actualType],
       size: sizes[actualSize],

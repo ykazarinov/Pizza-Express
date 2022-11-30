@@ -4,8 +4,6 @@ import { getCartFromLS } from '../../utils/getCartFromLS';
 
 import { CartItem, CartSliceState, PizzaOptions } from './types';
 
-import options from '../../assets/data/options.json';
-
 const initialState: CartSliceState = getCartFromLS();
 
 export const cartSlice = createSlice({
@@ -48,25 +46,11 @@ export const cartSlice = createSlice({
                 obj.type !== action.payload.type,
             );
             findItem.count--;
-            state.totalPrice = Number(
-              (
-                state.totalPrice -
-                findItem.price *
-                  options.marginSizes[options.sizes.indexOf(findItem.size)] *
-                  options.marginTypes[options.typesNames.indexOf(findItem.type)]
-              ).toFixed(2),
-            );
+            state.totalPrice = Number((state.totalPrice - findItem.price).toFixed(2));
           }
         } else {
           findItem.count--;
-          state.totalPrice = Number(
-            (
-              state.totalPrice -
-              findItem.price *
-                options.marginSizes[options.sizes.indexOf(findItem.size)] *
-                options.marginTypes[options.typesNames.indexOf(findItem.type)]
-            ).toFixed(2),
-          );
+          state.totalPrice = Number((state.totalPrice - findItem.price).toFixed(2));
         }
       }
     },
@@ -85,8 +69,8 @@ export const cartSlice = createSlice({
           .reduce((sum: number, item: CartItem) => {
             return (
               item.price *
-                options.marginSizes[options.sizes.indexOf(item.size)] *
-                options.marginTypes[options.typesNames.indexOf(item.type)] *
+                // options.marginSizes[options.sizes.indexOf(item.size)] *
+                // options.marginTypes[options.typesNames.indexOf(item.type)] *
                 item.count +
               sum
             );

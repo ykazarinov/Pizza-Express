@@ -94,16 +94,7 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
         </button>
       </div>
       <div className="cart__item-price">
-        <b>
-          $
-          {(
-            Number(
-              (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(
-                2,
-              ),
-            ) * count
-          ).toFixed(2)}
-        </b>
+        <b>${(price * count).toFixed(2)}</b>
       </div>
       <div className="cart__item-remove">
         <div onClick={onClickRemove} className="button button--outline button--circle">

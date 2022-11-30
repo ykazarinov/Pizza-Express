@@ -5,8 +5,8 @@ import options from '../../assets/data/options.json';
 import React from 'react';
 
 const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types }) => {
-  const [actualType, setActualType] = React.useState(0);
-  const [actualSize, setActualSize] = React.useState(0);
+  const [actualType, setActualType] = React.useState(types[0]);
+  const [actualSize, setActualSize] = React.useState(options.sizes.indexOf(sizes[0]));
 
   return (
     <div className="pizza-block-wrapper">
@@ -24,6 +24,7 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
                 <li
                   key={i}
                   onClick={() => {
+                    // options.marginTypes.indexOf(options.typesNames[i])
                     setActualType(i);
                   }}
                   className={actualType === i ? 'active' : ''}>
@@ -37,9 +38,9 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
                 <li
                   key={i}
                   onClick={() => {
-                    setActualSize(i);
+                    setActualSize(options.sizes.indexOf(el));
                   }}
-                  className={actualSize === i ? 'active' : ''}>
+                  className={options.sizes[actualSize] === el ? 'active' : ''}>
                   {el} cm.
                 </li>
               ))}
