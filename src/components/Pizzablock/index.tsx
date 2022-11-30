@@ -47,7 +47,7 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">
-            from $
+            Price: $
             {Number(
               (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(
                 2,
