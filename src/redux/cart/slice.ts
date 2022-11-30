@@ -37,18 +37,20 @@ export const cartSlice = createSlice({
           obj.type === action.payload.type,
       );
       if (findItem) {
-        findItem.count--;
-        state.totalPrice = state.totalPrice - findItem.price;
-      }
-      // console.log(findItem);
-      if (findItem?.count === 0) {
-        if (window.confirm('Are you sure you want to remove?')) {
-          state.items = state.items.filter(
-            (obj: PizzaOptions) =>
-              obj.id !== action.payload.id ||
-              obj.size !== action.payload.size ||
-              obj.type !== action.payload.type,
-          );
+        if (findItem?.count === 1) {
+          if (window.confirm('Are you sure you want to remove?')) {
+            state.items = state.items.filter(
+              (obj: PizzaOptions) =>
+                obj.id !== action.payload.id ||
+                obj.size !== action.payload.size ||
+                obj.type !== action.payload.type,
+            );
+            findItem.count--;
+            state.totalPrice = Number((state.totalPrice - findItem.price).toFixed(2));
+          }
+        } else {
+          findItem.count--;
+          state.totalPrice = Number((state.totalPrice - findItem.price).toFixed(2));
         }
       }
     },
@@ -62,9 +64,13 @@ export const cartSlice = createSlice({
       );
       state.items = remainingItems;
 
-      state.totalPrice = remainingItems.reduce((sum: number, item: CartItem) => {
-        return item.price * item.count + sum;
-      }, 0);
+      state.totalPrice = Number(
+        remainingItems
+          .reduce((sum: number, item: CartItem) => {
+            return item.price * item.count + sum;
+          }, 0)
+          .toFixed(2),
+      );
     },
     clearItems: (state) => {
       state.items = [];

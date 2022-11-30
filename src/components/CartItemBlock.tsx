@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem, minusItem, removeItem } from '../redux/cart/slice';
 import { CartItem } from '../redux/cart/types';
+import options from '../assets/data/options.json';
 
 type CategoriesProps = {
   id: string;
@@ -23,6 +24,9 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
   imageUrl,
 }) => {
   const dispatch = useDispatch();
+
+  const actualType = options.typesNames.indexOf(type);
+  const actualSize = options.sizes.indexOf(size);
 
   const onClickPlus = () => {
     dispatch(addItem({ id, size, type } as CartItem));
@@ -90,7 +94,16 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
         </button>
       </div>
       <div className="cart__item-price">
-        <b>${price * count}</b>
+        <b>
+          $
+          {(
+            Number(
+              (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(
+                2,
+              ),
+            ) * count
+          ).toFixed(2)}
+        </b>
       </div>
       <div className="cart__item-remove">
         <div onClick={onClickRemove} className="button button--outline button--circle">

@@ -1,0 +1,6 @@
+{
+  "typesNames": ["Slim", "Traditional"],
+  "sizes": [26, 30, 40],
+  "marginTypes": [1, 1.2],
+  "marginSizes": [1, 1.5, 2]
+}

@@ -1,3 +1,4 @@
+import { IndexType } from 'typescript';
 import { SortType } from '../sort/types';
 
 export type FetchPizzasArgs = {
