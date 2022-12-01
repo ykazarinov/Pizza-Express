@@ -1,10 +1,11 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AddCartButton from '../components/AddButton';
-import options from '../assets/data/options.json';
-import { categories } from '../components/Categories';
-import RatingBlock from '../components/Rating';
+import AddCartButton from '../../components/AddButton';
+import options from '../../assets/data/options.json';
+import { categories } from '../../components/Categories';
+import RatingBlock from '../../components/Rating';
+import FullPizzaSkeleton from './Skeleton';
 
 const FullPizza: React.FC = () => {
   const { id } = useParams();
@@ -45,7 +46,13 @@ const FullPizza: React.FC = () => {
   }
 
   if (!pizza) {
-    return <>'Upload pizza...'</>;
+    return (
+      <div className="container">
+        <div className="fullpizza">
+          <FullPizzaSkeleton />
+        </div>
+      </div>
+    );
   }
   return (
     <div className="container">

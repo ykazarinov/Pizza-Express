@@ -1,5 +1,5 @@
 import React from 'react';
-import { Categories, Sort, Pizzablock, Skeleton, Pagination } from '../components';
+import { Categories, Sort, Pizzablock, PizzablockSkeleton, Pagination } from '../components';
 
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ import { FetchPizzasArgs } from '../redux/pizza/types';
 
 const Home: React.FC = () => {
   // const [pizzas, setPizzas] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -57,7 +57,8 @@ const Home: React.FC = () => {
     }
 
     if (!window.location.search) {
-      dispatch(fetchPizzas({} as FetchPizzasArgs));
+      console.log('1');
+      // dispatch(fetchPizzas({} as FetchPizzasArgs));
     }
     isMounted.current = true;
   }, [categoryId, sortType, searchValue, currentPage, isDescending]);
@@ -68,6 +69,7 @@ const Home: React.FC = () => {
       const params = qs.parse(window.location.search.substring(1));
 
       const sort = sortValues.find((obj) => obj.sortProperty === params.sortProperty);
+      // console.log('sdfsdf');
       const order = params.order === 'desc' ? true : false;
 
       params.categoryId && dispatch(setCategoryId(Number(params.categoryId)));
@@ -94,13 +96,14 @@ const Home: React.FC = () => {
     // fetchPizzas();
     window.scrollTo(0, 0);
     if (!isSearch.current) {
+      console.log('3');
       getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage, isDescending]);
 
   const filteredPizzas = items.map((obj: any) => <Pizzablock key={obj.id} {...obj} />);
-  const skeletons = [...new Array(9)].map((_, i) => <Skeleton key={i} />);
+  const skeletons = [...new Array(9)].map((_, i) => <PizzablockSkeleton key={i} />);
 
   return (
     <div className="container">

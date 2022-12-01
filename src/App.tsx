@@ -5,20 +5,40 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 
 import MainLayout from './layouts/MainLayout';
+import FullPizzaSkeleton from './pages/FullPizza/Skeleton';
+
+import { Oval } from 'react-loader-spinner';
+
+const loaderEl = (
+  <div className="loading-container">
+    <Oval
+      height={80}
+      width={80}
+      color="#fe5f1e"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+      ariaLabel="oval-loading"
+      secondaryColor="#ffdf8c"
+      strokeWidth={2}
+      strokeWidthSecondary={2}
+    />
+  </div>
+);
 
 const Cart = Loadable({
   loader: () => import(/* webpackChunkName: "Cart" */ './pages/Cart'),
-  loading: () => <div>Loading...</div>,
+  loading: () => loaderEl,
 });
 
 const FullPizza = Loadable({
-  loader: () => import(/* webpackChunkName: "FullPizza" */ './pages/FullPizza'),
-  loading: () => <div>Loading...</div>,
+  loader: () => import(/* webpackChunkName: "FullPizza" */ './pages/FullPizza/index'),
+  loading: () => <FullPizzaSkeleton />,
 });
 
 const NotFound = Loadable({
   loader: () => import(/* webpackChunkName: "NotFound" */ './pages/NotFound'),
-  loading: () => <div>Loading...</div>,
+  loading: () => loaderEl,
 });
 
 // const Cart = React.lazy(() => import(/* webpackChunkName: "Cart" */ './pages/Cart'));
