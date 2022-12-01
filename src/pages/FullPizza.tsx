@@ -4,6 +4,7 @@ import axios from 'axios';
 import AddCartButton from '../components/AddButton';
 import options from '../assets/data/options.json';
 import { categories } from '../components/Categories';
+import RatingBlock from '../components/Rating';
 
 const FullPizza: React.FC = () => {
   const { id } = useParams();
@@ -15,6 +16,7 @@ const FullPizza: React.FC = () => {
     sizes: number[];
     types: number[];
     category: number;
+    rating: number;
   }>();
   const navagate = useNavigate();
 
@@ -54,6 +56,10 @@ const FullPizza: React.FC = () => {
         <div className="fullpizza__right">
           <h2>{pizza.title}</h2>
           <p>Category: {categories[pizza.category]}</p>
+          <p>
+            Rating:
+            <RatingBlock rating={pizza.rating} />
+          </p>
           <div className="pizza-block__selector">
             <ul>
               {pizza.types &&

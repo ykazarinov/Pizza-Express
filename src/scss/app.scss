@@ -106,7 +106,7 @@ body {
 
   &--cart {
     max-width: 820px;
-    margin: 90px auto;
+    // margin: 90px auto;
     .content__title {
       margin: 0;
     }
@@ -114,6 +114,9 @@ body {
 }
 
 .cart {
+  &__order-price {
+    text-align: right;
+  }
   &__top {
     display: flex;
     justify-content: space-between;
@@ -179,12 +182,18 @@ body {
     border-top: 1px solid $gray-line;
     padding-top: 30px;
     margin-top: 30px;
+    @media (max-width: 645px) {
+      flex-wrap: wrap;
+    }
 
     &-img {
       display: flex;
       align-items: center;
       margin-right: 15px;
       width: 10%;
+      @media (max-width: 645px) {
+        display: none;
+      }
 
       img {
         width: 80px;
@@ -197,6 +206,9 @@ body {
       flex-direction: column;
       justify-content: center;
       width: 40%;
+      @media (max-width: 645px) {
+        width: 100%;
+      }
 
       h3 {
         font-weight: bold;
@@ -216,6 +228,9 @@ body {
       align-items: center;
       justify-content: space-between;
       width: 13%;
+      @media (max-width: 645px) {
+        width: 30%;
+      }
 
       &-minus {
         svg {
@@ -235,6 +250,9 @@ body {
       align-items: center;
       justify-content: center;
       width: 33%;
+      @media (max-width: 645px) {
+        width: 50%;
+      }
 
       b {
         font-weight: bold;
@@ -248,6 +266,9 @@ body {
       align-items: center;
       justify-content: flex-end;
       width: 4%;
+      @media (max-width: 645px) {
+        width: 20%;
+      }
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);
@@ -344,6 +365,9 @@ body {
     margin: 0 auto;
     width: 620px;
     text-align: center;
+    @media (max-width: 645px) {
+      width: 100%;
+    }
 
     h2 {
       font-size: 36px;
@@ -396,6 +420,21 @@ body {
       font-size: 18px;
       color: #8d8d8d;
       margin-bottom: 1rem;
+    }
+    .yellow {
+      color: #ffd700;
+    }
+  }
+  @media (max-width: 645px) {
+    flex-wrap: wrap;
+    h2 {
+      text-align: center;
+    }
+    &__left {
+      width: 100%;
+    }
+    &__right {
+      width: 100%;
     }
   }
 }

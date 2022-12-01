@@ -110,7 +110,7 @@ const Cart: React.FC = () => {
               {' '}
               Total pizzas: <b>{totalCount} pcs.</b>{' '}
             </span>
-            <span>
+            <span className="cart__order-price">
               {' '}
               Order price: <b> ${totalPrice}</b>{' '}
             </span>
