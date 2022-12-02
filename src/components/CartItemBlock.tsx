@@ -6,10 +6,11 @@ import options from '../assets/data/options.json';
 import { Link } from 'react-router-dom';
 import { selectActualLang } from '../redux/lang/selectors';
 import getLangData from '../utils/getLangData';
+import { TitleTranscription } from '../redux/pizza/types';
 
 type CategoriesProps = {
   id: string;
-  title: string;
+  title: TitleTranscription[];
   type: number;
   size: number;
   price: number;
@@ -53,7 +54,9 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
       </div>
       <div className="cart__item-info">
         <h3>
-          <Link to={`/${actualLang}/pizza/${id}`}>{title}</Link>
+          <Link to={`/${actualLang}/pizza/${id}`}>
+            {title.find((el) => el.lang === actualLang)?.text}
+          </Link>
         </h3>
         <p>
           {langData?.inscription.typesNames[type]}, {size} cm.

@@ -11,13 +11,15 @@ import { onChooseLang } from '../../redux/lang/slice';
 import { LangEnum } from '../../redux/lang/types';
 import { selectActualLang } from '../../redux/lang/selectors';
 import getLangData from '../../utils/getLangData';
+import { TitleTranscription } from '../../redux/pizza/types';
+import { title } from 'process';
 
 const FullPizza: React.FC = () => {
   const { id } = useParams();
   const [pizza, setPizza] = React.useState<{
     id: string;
     imageUrl: string;
-    title: string;
+    title: TitleTranscription[];
     price: number;
     sizes: number[];
     types: number[];
@@ -75,7 +77,7 @@ const FullPizza: React.FC = () => {
           <img src={pizza.imageUrl} alt="Pizza" className="fullpizza__image" />
         </div>
         <div className="fullpizza__right">
-          <h2>{pizza.title}</h2>
+          <h2>{pizza.title.find((el) => el.lang === actualLang)?.text}</h2>
           <p>
             {langData?.inscription.fullPizzaPage.category}{' '}
             {categories && categories[pizza.category]}

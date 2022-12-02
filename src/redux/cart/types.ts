@@ -1,6 +1,8 @@
+import { TitleTranscription } from '../pizza/types';
+
 export type CartItem = {
   id: string;
-  title: string;
+  title: TitleTranscription[];
   price: number;
   imageUrl: string;
   type: number;

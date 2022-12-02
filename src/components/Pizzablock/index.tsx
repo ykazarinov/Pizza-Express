@@ -21,7 +21,7 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
           <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         </Link>
         <Link to={`pizza/${id}`}>
-          <h4 className="pizza-block__title">{title}</h4>
+          <h4 className="pizza-block__title">{title.find((el) => el.lang === actualLang)?.text}</h4>
         </Link>
         <div className="pizza-block__selector">
           <ul>

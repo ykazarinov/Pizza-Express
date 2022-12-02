@@ -1,4 +1,5 @@
 import { IndexType } from 'typescript';
+import { LangEnum } from '../lang/types';
 import { SortType } from '../sort/types';
 
 export type FetchPizzasArgs = {
@@ -9,9 +10,14 @@ export type FetchPizzasArgs = {
   sortType: SortType;
 };
 
+export type TitleTranscription = {
+  lang: LangEnum;
+  text: string;
+};
+
 export type Pizza = {
   id: string;
-  title: string;
+  title: TitleTranscription[];
   price: number;
   imageUrl: string;
   sizes: number[];

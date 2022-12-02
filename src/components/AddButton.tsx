@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectCartItemById } from '../redux/cart/selectors';
 import { addItem } from '../redux/cart/slice';
 import { CartItem } from '../redux/cart/types';
-import { Pizza } from '../redux/pizza/types';
+import { Pizza, TitleTranscription } from '../redux/pizza/types';
 import options from '../assets/data/options.json';
 import { selectActualLang } from '../redux/lang/selectors';
 import getLangData from '../utils/getLangData';
 
 type activePizza = {
   id: string;
-  title: string;
+  title: TitleTranscription[];
   price: number;
   imageUrl: string;
   sizes: number[];
@@ -41,7 +41,7 @@ const AddCartButton: React.FC<activePizza> = ({
   const onClickAdd = () => {
     const item: CartItem = {
       id,
-      title,
+      title: title,
       price: Number(
         (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(2),
       ),
