@@ -1,15 +1,11 @@
 import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { selectActualLang } from '../redux/lang/selectors';
 import { selectIsDescending, selectIsVisiblePopup } from '../redux/sort/selectors';
 import { onChooseSort, setIsDescending, setIsVisiblePopup } from '../redux/sort/slice';
 import { SortPropertyEnum, SortType } from '../redux/sort/types';
-
-export const sortValues: SortType[] = [
-  { name: 'popularity', sortProperty: SortPropertyEnum.RATING },
-  { name: 'price', sortProperty: SortPropertyEnum.PRICE },
-  { name: 'alphabet', sortProperty: SortPropertyEnum.TITLE },
-];
+import getLangData from '../utils/getLangData';
 
 type SortPopupProps = {
   value: SortType;
@@ -17,6 +13,14 @@ type SortPopupProps = {
 
 const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
+
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
+  const sortValues: SortType[] = [
+    { name: langData?.inscription.sortItems[0], sortProperty: SortPropertyEnum.RATING },
+    { name: langData?.inscription.sortItems[1], sortProperty: SortPropertyEnum.PRICE },
+    { name: langData?.inscription.sortItems[2], sortProperty: SortPropertyEnum.TITLE },
+  ];
 
   const sortRef = React.useRef<HTMLDivElement>(null);
 

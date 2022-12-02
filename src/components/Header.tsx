@@ -4,6 +4,8 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/cart/selectors';
 import React from 'react';
+import { selectActualLang } from '../redux/lang/selectors';
+import getLangData from '../utils/getLangData';
 
 const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
@@ -23,22 +25,28 @@ const Header: React.FC = () => {
     isMounted.current = true;
   }, [items]);
 
+  React.useEffect(() => {
+    // dispatch(onChooseLang(lang as LangEnum));
+  }, []);
+
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to={`/${actualLang}`}>
           <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
-              <h1>Pizza Shop</h1>
-              <p>Fast and tasty!</p>
+              <h1>{langData?.inscription.header.sitename}</h1>
+              <p>{langData?.inscription.header.slogan}</p>
             </div>
           </div>
         </Link>
         {pathname !== '/cart' && <Search />}
         <div className="header__cart">
           {pathname !== '/cart' && (
-            <Link to="/cart" className="button button--cart">
+            <Link to={`/${actualLang}/cart`} className="button button--cart">
               <span>${totalPrice}</span>
               <div className="button__delimiter"></div>
               <svg

@@ -71,7 +71,7 @@ body {
         width: 100%;
         overflow: auto;
         ul {
-          width: 785px;
+          // width: 785px;
         }
       }
       .sort {
@@ -368,6 +368,10 @@ body {
     @media (max-width: 645px) {
       width: 100%;
     }
+    a {
+      color: darkslateblue;
+      text-decoration: underline;
+    }
 
     h2 {
       font-size: 36px;
@@ -399,6 +403,7 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+      text-decoration: none;
     }
   }
 }

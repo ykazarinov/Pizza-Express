@@ -1,13 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem, minusItem, removeItem } from '../redux/cart/slice';
 import { CartItem } from '../redux/cart/types';
 import options from '../assets/data/options.json';
+import { Link } from 'react-router-dom';
+import { selectActualLang } from '../redux/lang/selectors';
+import getLangData from '../utils/getLangData';
 
 type CategoriesProps = {
   id: string;
   title: string;
-  type: string;
+  type: number;
   size: number;
   price: number;
   count: number;
@@ -25,8 +28,8 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const actualType = options.typesNames.indexOf(type);
-  const actualSize = options.sizes.indexOf(size);
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
 
   const onClickPlus = () => {
     dispatch(addItem({ id, size, type } as CartItem));
@@ -37,19 +40,23 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
   };
 
   const onClickRemove = () => {
-    if (window.confirm('Are you sure you want to remove?')) {
+    if (window.confirm(langData?.inscription.cartPage.windowText)) {
       dispatch(removeItem({ id, size, type }));
     }
   };
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <Link to={`/${actualLang}/pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        </Link>
       </div>
       <div className="cart__item-info">
-        <h3>{title}</h3>
+        <h3>
+          <Link to={`/${actualLang}/pizza/${id}`}>{title}</Link>
+        </h3>
         <p>
-          {type}, {size} cm.
+          {langData?.inscription.typesNames[type]}, {size} cm.
         </p>
       </div>
       <div className="cart__item-count">

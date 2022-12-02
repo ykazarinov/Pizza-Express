@@ -67,13 +67,7 @@ export const cartSlice = createSlice({
       state.totalPrice = Number(
         remainingItems
           .reduce((sum: number, item: CartItem) => {
-            return (
-              item.price *
-                // options.marginSizes[options.sizes.indexOf(item.size)] *
-                // options.marginTypes[options.typesNames.indexOf(item.type)] *
-                item.count +
-              sum
-            );
+            return item.price * item.count + sum;
           }, 0)
           .toFixed(2),
       );

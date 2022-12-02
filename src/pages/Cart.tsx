@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CartItemBlock from '../components/CartItemBlock';
 import { clearItems } from '../redux/cart/slice';
 import { selectCart } from '../redux/cart/selectors';
 import CartEmpty from '../components/CartEmpty';
+import { selectActualLang } from '../redux/lang/selectors';
+import { onChooseLang } from '../redux/lang/slice';
+import { LangEnum } from '../redux/lang/types';
+import getLangData from '../utils/getLangData';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
+  const { lang } = useParams();
+  React.useEffect(() => {
+    dispatch(onChooseLang(lang as LangEnum));
+  }, []);
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
   const { totalPrice, items } = useSelector(selectCart);
 
   const totalCount = items.reduce((sum: number, item: any) => {
@@ -57,7 +67,7 @@ const Cart: React.FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            Cart
+            {langData?.inscription.cartPage.cart}
           </h2>
           <div onClick={onClickClear} className="cart__clear">
             <svg
@@ -96,7 +106,7 @@ const Cart: React.FC = () => {
               />
             </svg>
 
-            <span>Empty cart</span>
+            <span>{langData?.inscription.cartPage.emptyCart}</span>
           </div>
         </div>
         <div className="content__items">
@@ -108,15 +118,18 @@ const Cart: React.FC = () => {
           <div className="cart__bottom-details">
             <span>
               {' '}
-              Total pizzas: <b>{totalCount} pcs.</b>{' '}
+              {langData?.inscription.cartPage.totalPizzas}{' '}
+              <b>
+                {totalCount} {langData?.inscription.cartPage.pcs}
+              </b>{' '}
             </span>
             <span className="cart__order-price">
               {' '}
-              Order price: <b> ${totalPrice}</b>{' '}
+              {langData?.inscription.cartPage.orderPrice} <b> ${totalPrice}</b>{' '}
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <Link to="/" className="button button--outline button--add go-back-btn">
+            <Link to={`/${actualLang}/`} className="button button--outline button--add go-back-btn">
               <svg
                 width="8"
                 height="14"
@@ -132,10 +145,10 @@ const Cart: React.FC = () => {
                 />
               </svg>
 
-              <span>Come back</span>
+              <span>{langData?.inscription.cartPage.comeBack}</span>
             </Link>
             <div className="button pay-btn">
-              <span>Pay now</span>
+              <span>{langData?.inscription.cartPage.payNow}</span>
             </div>
           </div>
         </div>

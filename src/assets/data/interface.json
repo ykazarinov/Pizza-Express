@@ -1,0 +1,106 @@
+[
+  {
+    "lang": "en",
+    "inscription": {
+      "header": {
+        "sitename": "Pizza shop",
+        "slogan": "Fast and tasty!",
+        "searchPlaceholder": "Pizza search"
+      },
+      "categories": ["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"],
+      "sortItems": ["popularity", "price", "alphabet"],
+      "typesNames": ["Slim", "Traditional"],
+      "homePage": {
+        "sortBy": "Sort by",
+        "title": "All pizzas"
+      },
+      "loadingError": {
+        "title": "Pizza loading error",
+        "text": "Failed to load pizzas. Please try again later"
+      },
+      "pizzaBlock": {
+        "price": "Price",
+        "add": "Add",
+        "cm": "cm."
+      },
+      "fullPizzaPage": {
+        "category": "Category:",
+        "rating": "Rating:"
+      },
+      "cartPage": {
+        "cart": "Cart",
+        "emptyCart": "Empty cart",
+        "totalPizzas": "Total pizzas",
+        "pcs": "pcs.",
+        "orderPrice": "Order price:",
+        "comeBack": "Come back",
+        "payNow": "Pay now",
+        "windowText": "Are you sure you want to remove?"
+      },
+      "emptyCartPage": {
+        "title": "Empty cart",
+        "text1": "You probably haven't ordered pizza yet.",
+        "text2": "To order pizza, ",
+        "linkText": "go to the main page.",
+        "comeBack": "Come back"
+      },
+      "page404": {
+        "title": "Nothing was found:",
+        "text": "Unfortunately, this page was not found on our site. To go to the main page, click on the following link:",
+        "linkText": "Go to home page"
+      }
+    }
+  },
+  {
+    "lang": "fr",
+    "inscription": {
+      "header": {
+        "sitename": "Pizza shop",
+        "slogan": "Rapide et savoureux!",
+        "searchPlaceholder": "Recherche de pizzas"
+      },
+      "categories": ["Tous", "Viande", "Végétarien", "Grillades", "Épicé", "Fermé"],
+      "sortItems": ["popularité", "prix", "alphabet"],
+      "typesNames": ["Slim", "Traditionnel"],
+      "homePage": {
+        "sortBy": "Trier par",
+        "title": "Toutes les pizzas"
+      },
+      "loadingError": {
+        "title": "Erreur de chargement de pizza",
+        "text": "Échec du chargement des pizzas. Veuillez réessayer plus tard"
+      },
+      "pizzaBlock": {
+        "price": "Prix",
+        "add": "Ajouter",
+        "cm": "cm."
+      },
+      "fullPizzaPage": {
+        "category": "Catégorie :",
+        "rating": "Évaluation :"
+      },
+      "cartPage": {
+        "cart": "Panier",
+        "emptyCart": "Panier vide",
+        "totalPizzas": "Total des pizzas",
+        "pcs": "pièces",
+        "orderPrice": "Prix de la commande:",
+        "comeBack": "Revenir",
+        "payNow": "Payez maintenant",
+        "windowText": "Êtes-vous sûr de vouloir désinstaller?"
+      },
+      "emptyCartPage": {
+        "title": "Panier vide",
+        "text1": "Vous n'avez probablement pas encore commandé de pizza.",
+        "text2": "Pour commander des pizzas, ",
+        "linkText": "aller à la page principale.",
+        "comeBack": "Revenir"
+      },
+      "page404": {
+        "title": "Rien n'a été trouvé :",
+        "text": "Malheureusement, cette page n'a pas été trouvée sur notre site. Pour accéder à la page principale, cliquez sur le lien suivant :",
+        "linkText": "Aller à la page d'accueil"
+      }
+    }
+  }
+]

@@ -3,7 +3,7 @@ export type CartItem = {
   title: string;
   price: number;
   imageUrl: string;
-  type: string;
+  type: number;
   size: number;
   count: number;
 };
@@ -11,7 +11,7 @@ export type CartItem = {
 export type PizzaOptions = {
   id: string;
   size: number;
-  type: string;
+  type: number;
 };
 
 export interface CartSliceState {

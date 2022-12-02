@@ -2,15 +2,13 @@ import React from 'react';
 import { Categories, Sort, Pizzablock, PizzablockSkeleton, Pagination } from '../components';
 
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { setCurrentPage } from '../redux/pagination/slice';
 
 import { setCategoryId } from '../redux/filter/slice';
 import { onChooseSort, setOrder } from '../redux/sort/slice';
-
-import { sortValues } from '../components/Sort';
 
 import { setSearchValue } from '../redux/search/slice';
 import { useAppDispatch } from '../redux/store';
@@ -21,12 +19,29 @@ import { selectFilterCategoryId } from '../redux/filter/selectors';
 import { selectPizzaData } from '../redux/pizza/selectors';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
 import { FetchPizzasArgs } from '../redux/pizza/types';
+import { selectActualLang } from '../redux/lang/selectors';
+import { onChooseLang } from '../redux/lang/slice';
+import { LangEnum } from '../redux/lang/types';
+import getLangData from '../utils/getLangData';
+import { SortPropertyEnum, SortType } from '../redux/sort/types';
 
 const Home: React.FC = () => {
   // const [pizzas, setPizzas] = React.useState([]);
+
+  const { lang } = useParams();
+
   const [isLoading, setIsLoading] = React.useState(false);
 
   const dispatch = useAppDispatch();
+
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
+
+  const sortValues: SortType[] = [
+    { name: langData?.inscription.sortItems[0], sortProperty: SortPropertyEnum.RATING },
+    { name: langData?.inscription.sortItems[1], sortProperty: SortPropertyEnum.PRICE },
+    { name: langData?.inscription.sortItems[2], sortProperty: SortPropertyEnum.TITLE },
+  ];
 
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
@@ -41,6 +56,10 @@ const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
 
   const isDescending = useSelector(selectIsDescending);
+
+  React.useEffect(() => {
+    dispatch(onChooseLang(lang as LangEnum));
+  }, []);
 
   // if we changed parameters and it was first render
   React.useEffect(() => {
@@ -57,7 +76,7 @@ const Home: React.FC = () => {
     }
 
     if (!window.location.search) {
-      console.log('1');
+      // console.log('1');
       // dispatch(fetchPizzas({} as FetchPizzasArgs));
     }
     isMounted.current = true;
@@ -111,11 +130,11 @@ const Home: React.FC = () => {
         <Categories />
         <Sort value={sortType} />
       </div>
-      <h2 className="content__title">All pizzas</h2>
+      <h2 className="content__title">{langData?.inscription.homePage.title}</h2>
       {status === 'error' ? (
         <div className="content__error_info">
-          <h2>Pizza loading error</h2>
-          <p>Failed to load pizzas. Please try again later</p>
+          <h2>{langData?.inscription.loadingError.title}</h2>
+          <p>{langData?.inscription.loadingError.text}</p>
         </div>
       ) : (
         <div className="content__items">
@@ -125,7 +144,6 @@ const Home: React.FC = () => {
 
       <Pagination
         onChangePage={(page: number) => {
-          // dispatch({ type: '111', payload: 3243 });
           dispatch(setCurrentPage(page));
         }}
       />

@@ -5,6 +5,8 @@ import { addItem } from '../redux/cart/slice';
 import { CartItem } from '../redux/cart/types';
 import { Pizza } from '../redux/pizza/types';
 import options from '../assets/data/options.json';
+import { selectActualLang } from '../redux/lang/selectors';
+import getLangData from '../utils/getLangData';
 
 type activePizza = {
   id: string;
@@ -29,6 +31,9 @@ const AddCartButton: React.FC<activePizza> = ({
 }) => {
   const dispatch = useDispatch();
 
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
+
   const cartItems = useSelector(selectCartItemById(id));
   const addedCount = cartItems
     ? cartItems.reduce((sum: number, obj: CartItem) => obj.count + sum, 0)
@@ -41,7 +46,7 @@ const AddCartButton: React.FC<activePizza> = ({
         (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(2),
       ),
       imageUrl,
-      type: options.typesNames[actualType],
+      type: actualType,
       size: sizes[actualSize],
       count: 0,
     };
@@ -60,7 +65,7 @@ const AddCartButton: React.FC<activePizza> = ({
           fill="white"
         />
       </svg>
-      <span>Add</span>
+      <span>{langData?.inscription.pizzaBlock.add}</span>
       {addedCount > 0 && <i>{addedCount}</i>}
     </div>
   );

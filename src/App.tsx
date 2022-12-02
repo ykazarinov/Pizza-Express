@@ -1,6 +1,7 @@
 import Loadable from 'react-loadable';
 import './scss/app.scss';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 
@@ -8,6 +9,7 @@ import MainLayout from './layouts/MainLayout';
 import FullPizzaSkeleton from './pages/FullPizza/Skeleton';
 
 import { Oval } from 'react-loader-spinner';
+import { selectActualLang } from './redux/lang/selectors';
 
 const loaderEl = (
   <div className="loading-container">
@@ -49,30 +51,30 @@ const NotFound = Loadable({
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route path="" element={<Home />} />
+      <Route path={''} element={<MainLayout />}>
+        <Route path="/:lang" element={<Home />} />
         <Route
-          path="cart"
+          path="/:lang/cart"
           element={
-            <React.Suspense fallback={<div>Loading...</div>}>
-              <Cart />
-            </React.Suspense>
+            // <React.Suspense fallback={<div>Loading...</div>}>
+            <Cart />
+            // </React.Suspense>
           }
         />
         <Route
-          path="pizza/:id"
+          path="/:lang/pizza/:id"
           element={
-            <React.Suspense fallback={<div>Loading...</div>}>
-              <FullPizza />
-            </React.Suspense>
+            // <React.Suspense fallback={<div>Loading...</div>}>
+            <FullPizza />
+            // </React.Suspense>
           }
         />
         <Route
-          path="*"
+          path="/:lang/*"
           element={
-            <React.Suspense fallback={<div>Loading...</div>}>
-              <NotFound />
-            </React.Suspense>
+            // <React.Suspense fallback={<div>Loading...</div>}>
+            <NotFound />
+            // </React.Suspense>
           }
         />
       </Route>

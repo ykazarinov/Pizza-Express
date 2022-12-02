@@ -5,6 +5,7 @@ import searchReducer from './search/slice';
 import paginationReducer from './pagination/slice';
 import cartReducer from './cart/slice';
 import pizzaReducer from './pizza/slice';
+import langReducer from './lang/slice';
 import { useDispatch } from 'react-redux';
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     pagination: paginationReducer,
     cart: cartReducer,
     pizza: pizzaReducer,
+    lang: langReducer,
   },
 });
 

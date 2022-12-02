@@ -3,9 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AddCartButton from '../../components/AddButton';
 import options from '../../assets/data/options.json';
-import { categories } from '../../components/Categories';
+// import { categories } from '../../components/Categories';
 import RatingBlock from '../../components/Rating';
 import FullPizzaSkeleton from './Skeleton';
+import { useDispatch, useSelector } from 'react-redux';
+import { onChooseLang } from '../../redux/lang/slice';
+import { LangEnum } from '../../redux/lang/types';
+import { selectActualLang } from '../../redux/lang/selectors';
+import getLangData from '../../utils/getLangData';
 
 const FullPizza: React.FC = () => {
   const { id } = useParams();
@@ -29,8 +34,8 @@ const FullPizza: React.FC = () => {
       try {
         const { data } = await axios.get('https://63692f3815219b849611dc7a.mockapi.io/items/' + id);
         setPizza(data);
-        setActualType(data.types[0]);
-        setActualSize(options.sizes.indexOf(data.sizes[0]));
+        // setActualType(data.types[0]);
+        // setActualSize(options.sizes.indexOf(data.sizes[0]));
       } catch (err) {
         console.log(err);
         alert(err);
@@ -44,6 +49,15 @@ const FullPizza: React.FC = () => {
     // setActualType(pizza.types[0]);
     // setActualSize(options.sizes.indexOf(pizza.sizes[0]));
   }
+
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  React.useEffect(() => {
+    dispatch(onChooseLang(lang as LangEnum));
+  }, []);
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
+  const categories = langData?.inscription.categories;
 
   if (!pizza) {
     return (
@@ -62,9 +76,12 @@ const FullPizza: React.FC = () => {
         </div>
         <div className="fullpizza__right">
           <h2>{pizza.title}</h2>
-          <p>Category: {categories[pizza.category]}</p>
           <p>
-            Rating:
+            {langData?.inscription.fullPizzaPage.category}{' '}
+            {categories && categories[pizza.category]}
+          </p>
+          <p>
+            {langData?.inscription.fullPizzaPage.rating}
             <RatingBlock rating={pizza.rating} />
           </p>
           <div className="pizza-block__selector">
@@ -74,11 +91,10 @@ const FullPizza: React.FC = () => {
                   <li
                     key={i}
                     onClick={() => {
-                      // options.marginTypes.indexOf(options.typesNames[i])
                       setActualType(i);
                     }}
                     className={actualType === i ? 'active' : ''}>
-                    {options.typesNames[i]}
+                    {langData?.inscription.typesNames[i]}
                   </li>
                 ))}
             </ul>
@@ -91,14 +107,14 @@ const FullPizza: React.FC = () => {
                       setActualSize(options.sizes.indexOf(el));
                     }}
                     className={options.sizes[actualSize] === el ? 'active' : ''}>
-                    {el} cm.
+                    {el} {langData?.inscription.pizzaBlock.cm}
                   </li>
                 ))}
             </ul>
           </div>
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">
-              Price: $
+              {langData?.inscription.pizzaBlock.price} $
               {Number(
                 (
                   pizza.price *
@@ -115,8 +131,8 @@ const FullPizza: React.FC = () => {
               sizes={pizza.sizes}
               types={pizza.types}
               // {...{ id, title, price, imageUrl, sizes, types }}
-              actualType={0}
-              actualSize={0}
+              actualType={actualType}
+              actualSize={actualSize}
             />
           </div>
         </div>

@@ -5,7 +5,7 @@ export enum SortPropertyEnum {
 }
 
 export type SortType = {
-  name: string;
+  name?: string;
   sortProperty: SortPropertyEnum;
 };
 

@@ -3,10 +3,16 @@ import { Pizza } from '../../redux/pizza/types';
 import AddCartButton from '../AddButton';
 import options from '../../assets/data/options.json';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectActualLang } from '../../redux/lang/selectors';
+import getLangData from '../../utils/getLangData';
 
 const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types }) => {
   const [actualType, setActualType] = React.useState(types[0]);
   const [actualSize, setActualSize] = React.useState(options.sizes.indexOf(sizes[0]));
+
+  const actualLang = useSelector(selectActualLang);
+  const langData = getLangData(actualLang);
 
   return (
     <div className="pizza-block-wrapper">
@@ -24,11 +30,10 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
                 <li
                   key={i}
                   onClick={() => {
-                    // options.marginTypes.indexOf(options.typesNames[i])
                     setActualType(i);
                   }}
                   className={actualType === i ? 'active' : ''}>
-                  {options.typesNames[i]}
+                  {langData?.inscription.typesNames[i]}
                 </li>
               ))}
           </ul>
@@ -41,14 +46,14 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
                     setActualSize(options.sizes.indexOf(el));
                   }}
                   className={options.sizes[actualSize] === el ? 'active' : ''}>
-                  {el} cm.
+                  {el} {langData?.inscription.pizzaBlock.cm}
                 </li>
               ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">
-            Price: $
+            {langData?.inscription.pizzaBlock.price}: $
             {Number(
               (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(
                 2,
