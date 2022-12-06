@@ -1,8 +1,7 @@
 @import '../variables';
 
-.lang {
+.currency {
   position: relative;
-  margin-bottom: 0.5rem;
   &__label {
     display: flex;
     align-items: center;
@@ -13,9 +12,9 @@
 
     span {
       color: $orange;
-      font-size: 0.9rem;
       border-bottom: 1px dashed $orange;
       cursor: pointer;
+      font-size: 0.9rem;
     }
   }
 

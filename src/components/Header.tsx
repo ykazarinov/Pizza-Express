@@ -3,15 +3,18 @@ import logo from '../assets/images/pizza-logo.svg';
 import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/cart/selectors';
+import options from '../assets/data/options.json';
 import React from 'react';
-import { selectActualLang } from '../redux/lang/selectors';
+import { selectActualCurrency, selectActualLang } from '../redux/lang/selectors';
 import getLangData from '../utils/getLangData';
+import { CurrencyEnum } from '../redux/lang/types';
 
 const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
   const isMounted = React.useRef(false); // we checking: if the component has already been rendered before
 
   const { pathname } = useLocation();
+  const actualCurrency = useSelector(selectActualCurrency);
 
   const totalCount = items.reduce((sum: number, item: any) => {
     return item.count + sum;
@@ -47,7 +50,12 @@ const Header: React.FC = () => {
         <div className="header__cart">
           {pathname !== '/cart' && (
             <Link to={`/${actualLang}/cart`} className="button button--cart">
-              <span>${totalPrice}</span>
+              <span>
+                {/* ${totalPrice} */}
+                {actualCurrency === CurrencyEnum.USD
+                  ? `$` + Number(totalPrice.toFixed(2))
+                  : Number((totalPrice * options.exchangeEuro).toFixed(2)) + ` €`}
+              </span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"

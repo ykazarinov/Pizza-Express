@@ -5,10 +5,11 @@ import CartItemBlock from '../components/CartItemBlock';
 import { clearItems } from '../redux/cart/slice';
 import { selectCart } from '../redux/cart/selectors';
 import CartEmpty from '../components/CartEmpty';
-import { selectActualLang } from '../redux/lang/selectors';
+import { selectActualCurrency, selectActualLang } from '../redux/lang/selectors';
 import { onChooseLang } from '../redux/lang/slice';
-import { LangEnum } from '../redux/lang/types';
+import { CurrencyEnum, LangEnum } from '../redux/lang/types';
 import getLangData from '../utils/getLangData';
+import options from '../assets/data/options.json';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,13 +20,14 @@ const Cart: React.FC = () => {
   const actualLang = useSelector(selectActualLang);
   const langData = getLangData(actualLang);
   const { totalPrice, items } = useSelector(selectCart);
+  const actualCurrency = useSelector(selectActualCurrency);
 
   const totalCount = items.reduce((sum: number, item: any) => {
     return item.count + sum;
   }, 0);
 
   const onClickClear = () => {
-    if (window.confirm('Are you sure you want to clear a basket?')) {
+    if (window.confirm(langData?.inscription.cartPage.windowText)) {
       dispatch(clearItems());
     }
   };
@@ -125,7 +127,13 @@ const Cart: React.FC = () => {
             </span>
             <span className="cart__order-price">
               {' '}
-              {langData?.inscription.cartPage.orderPrice} <b> ${totalPrice}</b>{' '}
+              {langData?.inscription.cartPage.orderPrice}{' '}
+              <b>
+                {' '}
+                {actualCurrency === CurrencyEnum.USD
+                  ? `$` + Number(totalPrice.toFixed(2))
+                  : Number((totalPrice * options.exchangeEuro).toFixed(2)) + ` €`}
+              </b>{' '}
             </span>
           </div>
           <div className="cart__bottom-buttons">

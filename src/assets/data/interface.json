@@ -20,7 +20,7 @@
         "text": "Failed to load pizzas. Please try again later"
       },
       "pizzaBlock": {
-        "price": "Price",
+        "price": "Price: ",
         "add": "Add",
         "cm": "cm."
       },
@@ -33,7 +33,7 @@
         "emptyCart": "Empty cart",
         "totalPizzas": "Total pizzas",
         "pcs": "pcs.",
-        "orderPrice": "Order price:",
+        "orderPrice": "Order price: ",
         "comeBack": "Come back",
         "payNow": "Pay now",
         "windowText": "Are you sure you want to remove?"
@@ -49,6 +49,30 @@
         "title": "Nothing was found:",
         "text": "Unfortunately, this page was not found on our site. To go to the main page, click on the following link:",
         "linkText": "Go to home page"
+      },
+      "footer": {
+        "language": "Language",
+        "contacts": "Contact information",
+        "address": "Address",
+        "phone": "Phone",
+        "workingHours": "Working hours",
+        "usefulLinks": "Useful links",
+        "siteSettings": "Site settings",
+        "seoText": "Our pizzas are 100% produced in our establishment with a maximum of fresh products and by favoring local suppliers.",
+        "linksList": [
+          { "text": "Sitemap", "link": "/" },
+          { "text": "Legal Notice", "link": "/" },
+          { "text": "General Conditions of Sale", "link": "/" },
+          { "text": "Website development", "link": "https://artfish.pro" }
+        ],
+        "currency": "Currency",
+        "currencyList": [
+          {
+            "abbr": "eur",
+            "name": "Euro"
+          },
+          { "abbr": "usd", "name": "US Dollar" }
+        ]
       }
     }
   },
@@ -59,7 +83,7 @@
       "header": {
         "sitename": "Pizza shop",
         "slogan": "Rapide et savoureux!",
-        "searchPlaceholder": "Recherche de pizzas"
+        "searchPlaceholder": "Recherche de pizza"
       },
       "categories": ["Tous", "Viande", "Végétarien", "Grillades", "Épicé", "Fermé"],
       "sortItems": ["popularité", "prix", "alphabet"],
@@ -73,7 +97,7 @@
         "text": "Échec du chargement des pizzas. Veuillez réessayer plus tard"
       },
       "pizzaBlock": {
-        "price": "Prix",
+        "price": "Prix: ",
         "add": "Ajouter",
         "cm": "cm."
       },
@@ -86,7 +110,7 @@
         "emptyCart": "Panier vide",
         "totalPizzas": "Total des pizzas",
         "pcs": "pièces",
-        "orderPrice": "Prix de la commande:",
+        "orderPrice": "Prix de la commande: ",
         "comeBack": "Revenir",
         "payNow": "Payez maintenant",
         "windowText": "Êtes-vous sûr de vouloir désinstaller?"
@@ -102,6 +126,30 @@
         "title": "Rien n'a été trouvé :",
         "text": "Malheureusement, cette page n'a pas été trouvée sur notre site. Pour accéder à la page principale, cliquez sur le lien suivant :",
         "linkText": "Aller à la page d'accueil"
+      },
+      "footer": {
+        "language": "Langue",
+        "contacts": "Coordonnées",
+        "address": "Adresse",
+        "phone": "Téléphone",
+        "workingHours": "Heures de travail",
+        "usefulLinks": "Liens utiles",
+        "siteSettings": "Paramètres du site",
+        "seoText": "Nos pizzas sont 100 % produites dans notre établissement avec un maximum de produits frais et en privilégiant les fournisseurs locaux.",
+        "linksList": [
+          { "text": "Plan du site", "link": "/" },
+          { "text": "Mentions Légales", "link": "/" },
+          { "text": "Conditions Générale de Vente", "link": "/" },
+          { "text": "Développement de site Web", "link": "https://artfish.pro" }
+        ],
+        "currency": "Device",
+        "currencyList": [
+          {
+            "abbr": "eur",
+            "name": "Euro"
+          },
+          { "abbr": "usd", "name": "US Dollar" }
+        ]
       }
     }
   }

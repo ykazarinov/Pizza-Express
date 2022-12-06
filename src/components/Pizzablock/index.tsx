@@ -4,8 +4,9 @@ import AddCartButton from '../AddButton';
 import options from '../../assets/data/options.json';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectActualLang } from '../../redux/lang/selectors';
+import { selectActualCurrency, selectActualLang } from '../../redux/lang/selectors';
 import getLangData from '../../utils/getLangData';
+import { CurrencyEnum } from '../../redux/lang/types';
 
 const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types }) => {
   const [actualType, setActualType] = React.useState(types[0]);
@@ -13,6 +14,8 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
 
   const actualLang = useSelector(selectActualLang);
   const langData = getLangData(actualLang);
+
+  const actualCurrency = useSelector(selectActualCurrency);
 
   return (
     <div className="pizza-block-wrapper">
@@ -53,12 +56,24 @@ const Pizzablock: React.FC<Pizza> = ({ id, title, price, imageUrl, sizes, types 
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">
-            {langData?.inscription.pizzaBlock.price}: $
-            {Number(
-              (price * options.marginTypes[actualType] * options.marginSizes[actualSize]).toFixed(
-                2,
-              ),
-            )}
+            {langData?.inscription.pizzaBlock.price}:{' '}
+            {actualCurrency === CurrencyEnum.USD
+              ? `$` +
+                Number(
+                  (
+                    price *
+                    options.marginTypes[actualType] *
+                    options.marginSizes[actualSize]
+                  ).toFixed(2),
+                )
+              : Number(
+                  (
+                    price *
+                    options.marginTypes[actualType] *
+                    options.exchangeEuro *
+                    options.marginSizes[actualSize]
+                  ).toFixed(2),
+                ) + ` €`}
           </div>
           <AddCartButton
             id={id}

@@ -1,0 +1,13 @@
+{
+  "address1": "46 Boulevard Murat",
+  "address2": "Paris 75016",
+  "phone": "01 40 71 81 42",
+  "workingHours1": [
+    { "lang": "en", "text": "Open Monday through Friday" },
+    { "lang": "fr", "text": "Ouvert du Lundi au Vendredi" }
+  ],
+  "workingHours2": [
+    { "lang": "en", "text": "from 12 p.m. to 2 p.m." },
+    { "lang": "fr", "text": "de 12h à 14h" }
+  ]
+}

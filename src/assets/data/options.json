@@ -2,5 +2,6 @@
   "typesNames": ["Slim", "Traditional"],
   "sizes": [26, 30, 40],
   "marginTypes": [1, 1],
-  "marginSizes": [1, 1.5, 2]
+  "marginSizes": [1, 1.5, 2],
+  "exchangeEuro": 0.95
 }

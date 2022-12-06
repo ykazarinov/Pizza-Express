@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LangSliceState, LangEnum } from './types';
+import { LangSliceState, LangEnum, CurrencyEnum } from './types';
 
 const initialState: LangSliceState = {
   actualLang: LangEnum.ENG,
   isVisibleLangPopup: false,
+  actualCurrency: CurrencyEnum.USD,
+  isVisibleCurrencyPopup: false,
 };
 
 export const langSlice = createSlice({
@@ -16,9 +18,16 @@ export const langSlice = createSlice({
     setIsVisibleLangPopup: (state, action: PayloadAction<boolean>) => {
       state.isVisibleLangPopup = action.payload;
     },
+    onChooseCurrency: (state, action: PayloadAction<CurrencyEnum>) => {
+      state.actualCurrency = action.payload;
+    },
+    setIsVisibleCurrencyPopup: (state, action: PayloadAction<boolean>) => {
+      state.isVisibleCurrencyPopup = action.payload;
+    },
   },
 });
 
-export const { onChooseLang, setIsVisibleLangPopup } = langSlice.actions;
+export const { onChooseLang, setIsVisibleLangPopup, onChooseCurrency, setIsVisibleCurrencyPopup } =
+  langSlice.actions;
 
 export default langSlice.reducer;

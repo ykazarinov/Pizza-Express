@@ -65,7 +65,7 @@ const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
             />
           </svg>
         </div>
-        <b>Sort by:</b>
+        <b>{langData?.inscription.homePage.sortBy}</b>
         <span onClick={() => dispatch(setIsVisiblePopup(!isVisiblePopup))}>{value.name}</span>
       </div>
       {isVisiblePopup && (

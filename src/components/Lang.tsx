@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectActualLang, selectIsVisibleLangPopup } from '../redux/lang/selectors';
-import lang from '../assets/data/interface.json';
+import langData from '../assets/data/interface.json';
 import { LangEnum } from '../redux/lang/types';
 import { onChooseLang, setIsVisibleLangPopup } from '../redux/lang/slice';
 
@@ -37,15 +37,15 @@ const Lang: React.FC = React.memo(() => {
   return (
     <div ref={langRef} className="lang">
       <div className="lang__label">
-        <b>Lang:</b>
+        <b>{langData.find((el) => el.lang === actualLang)?.inscription.footer.language}</b>
         <span onClick={() => dispatch(setIsVisibleLangPopup(isVisibleLangPopup ? false : true))}>
-          {lang.find((el) => el.lang === actualLang)?.langName}
+          {langData.find((el) => el.lang === actualLang)?.langName}
         </span>
       </div>
       {isVisibleLangPopup && (
         <div className="lang__popup">
           <ul>
-            {lang.map((el, i) => (
+            {langData.map((el, i) => (
               <li
                 className={actualLang === el.lang ? 'active' : ''}
                 onClick={() => langClick(el.lang as LangEnum)}

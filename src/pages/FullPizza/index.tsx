@@ -8,8 +8,8 @@ import RatingBlock from '../../components/Rating';
 import FullPizzaSkeleton from './Skeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { onChooseLang } from '../../redux/lang/slice';
-import { LangEnum } from '../../redux/lang/types';
-import { selectActualLang } from '../../redux/lang/selectors';
+import { CurrencyEnum, LangEnum } from '../../redux/lang/types';
+import { selectActualCurrency, selectActualLang } from '../../redux/lang/selectors';
 import getLangData from '../../utils/getLangData';
 import { TitleTranscription } from '../../redux/pizza/types';
 import { title } from 'process';
@@ -60,6 +60,7 @@ const FullPizza: React.FC = () => {
   const actualLang = useSelector(selectActualLang);
   const langData = getLangData(actualLang);
   const categories = langData?.inscription.categories;
+  const actualCurrency = useSelector(selectActualCurrency);
 
   if (!pizza) {
     return (
@@ -116,14 +117,24 @@ const FullPizza: React.FC = () => {
           </div>
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">
-              {langData?.inscription.pizzaBlock.price} $
-              {Number(
-                (
-                  pizza.price *
-                  options.marginTypes[actualType] *
-                  options.marginSizes[actualSize]
-                ).toFixed(2),
-              )}
+              {langData?.inscription.pizzaBlock.price}
+              {actualCurrency === CurrencyEnum.USD
+                ? '$' +
+                  Number(
+                    (
+                      pizza.price *
+                      options.marginTypes[actualType] *
+                      options.marginSizes[actualSize]
+                    ).toFixed(2),
+                  )
+                : Number(
+                    (
+                      pizza.price *
+                      options.exchangeEuro *
+                      options.marginTypes[actualType] *
+                      options.marginSizes[actualSize]
+                    ).toFixed(2),
+                  ) + ' €'}
             </div>
             <AddCartButton
               id={pizza.id}

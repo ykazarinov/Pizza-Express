@@ -4,9 +4,10 @@ import { addItem, minusItem, removeItem } from '../redux/cart/slice';
 import { CartItem } from '../redux/cart/types';
 import options from '../assets/data/options.json';
 import { Link } from 'react-router-dom';
-import { selectActualLang } from '../redux/lang/selectors';
+import { selectActualCurrency, selectActualLang } from '../redux/lang/selectors';
 import getLangData from '../utils/getLangData';
 import { TitleTranscription } from '../redux/pizza/types';
+import { CurrencyEnum } from '../redux/lang/types';
 
 type CategoriesProps = {
   id: string;
@@ -30,6 +31,7 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
   const dispatch = useDispatch();
 
   const actualLang = useSelector(selectActualLang);
+  const actualCurrency = useSelector(selectActualCurrency);
   const langData = getLangData(actualLang);
 
   const onClickPlus = () => {
@@ -104,7 +106,11 @@ const CartItemBlock: React.FC<CategoriesProps> = ({
         </button>
       </div>
       <div className="cart__item-price">
-        <b>${(price * count).toFixed(2)}</b>
+        <b>
+          {actualCurrency === CurrencyEnum.USD
+            ? `$` + (price * count).toFixed(2)
+            : (price * options.exchangeEuro * count).toFixed(2) + ` €`}
+        </b>
       </div>
       <div className="cart__item-remove">
         <div onClick={onClickRemove} className="button button--outline button--circle">
