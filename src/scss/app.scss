@@ -12,6 +12,7 @@ body {
   height: 100%;
   background-color: #fff;
   margin: 50px auto;
+  margin-bottom: 1rem;
   border-radius: 10px;
   max-width: 1400px;
   @media (max-width: 645px) {
@@ -450,4 +451,16 @@ body {
   align-items: center;
   width: 100%;
   min-height: 500px;
+}
+
+footer {
+  display: flex;
+  padding-bottom: 2rem;
+  .footer__col {
+    width: 33.33%;
+    &:nth-child(3) {
+      display: flex;
+      justify-content: end;
+    }
+  }
 }

@@ -5,4 +5,5 @@ export enum LangEnum {
 
 export interface LangSliceState {
   actualLang: LangEnum;
+  isVisibleLangPopup: boolean;
 }

@@ -3,6 +3,7 @@ import { LangSliceState, LangEnum } from './types';
 
 const initialState: LangSliceState = {
   actualLang: LangEnum.ENG,
+  isVisibleLangPopup: false,
 };
 
 export const langSlice = createSlice({
@@ -12,9 +13,12 @@ export const langSlice = createSlice({
     onChooseLang: (state, action: PayloadAction<LangEnum>) => {
       state.actualLang = action.payload;
     },
+    setIsVisibleLangPopup: (state, action: PayloadAction<boolean>) => {
+      state.isVisibleLangPopup = action.payload;
+    },
   },
 });
 
-export const { onChooseLang } = langSlice.actions;
+export const { onChooseLang, setIsVisibleLangPopup } = langSlice.actions;
 
 export default langSlice.reducer;

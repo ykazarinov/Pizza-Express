@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { selectActualLang } from '../redux/lang/selectors';
 
 import { LangEnum } from '../redux/lang/types';
@@ -21,13 +22,16 @@ const MainLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className="wrapper">
-      <Header />
+    <>
+      <div className="wrapper">
+        <Header />
 
-      <div className="content">
-        <Outlet />
+        <div className="content">
+          <Outlet />
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

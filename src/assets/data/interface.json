@@ -1,6 +1,7 @@
 [
   {
     "lang": "en",
+    "langName": "English",
     "inscription": {
       "header": {
         "sitename": "Pizza shop",
@@ -53,6 +54,7 @@
   },
   {
     "lang": "fr",
+    "langName": "Français",
     "inscription": {
       "header": {
         "sitename": "Pizza shop",
