@@ -76,7 +76,6 @@ const Home: React.FC = () => {
     }
 
     if (!window.location.search) {
-      // console.log('1');
       // dispatch(fetchPizzas({} as FetchPizzasArgs));
     }
     isMounted.current = true;
@@ -88,7 +87,7 @@ const Home: React.FC = () => {
       const params = qs.parse(window.location.search.substring(1));
 
       const sort = sortValues.find((obj) => obj.sortProperty === params.sortProperty);
-      // console.log('sdfsdf');
+
       const order = params.order === 'desc' ? true : false;
 
       params.categoryId && dispatch(setCategoryId(Number(params.categoryId)));
@@ -115,7 +114,6 @@ const Home: React.FC = () => {
     // fetchPizzas();
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      console.log('3');
       getPizzas();
     }
     isSearch.current = false;

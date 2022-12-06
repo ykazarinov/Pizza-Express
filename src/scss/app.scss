@@ -456,8 +456,14 @@ body {
 footer {
   display: flex;
   padding-bottom: 2rem;
+  @media (max-width: 645px) {
+    flex-wrap: wrap;
+  }
   .footer__col {
     width: 20%;
+    @media (max-width: 645px) {
+      width: 100%;
+    }
 
     .footer__logo {
       display: flex;
@@ -471,6 +477,9 @@ footer {
     }
     &:nth-child(1) {
       width: 40%;
+      @media (max-width: 645px) {
+        width: 100%;
+      }
     }
     &:nth-child(4) {
       a {

@@ -7,7 +7,7 @@ export const fetchPizzas = createAsyncThunk<Pizza[], FetchPizzasArgs>(
   async (params: FetchPizzasArgs) => {
     const { search, direction, currentPage, categoryId, sortType } = params;
 
-    const url = 'https://63692f3815219b849611dc7a.mockapi.io/items';
+    const url = process.env.MOCKAPI_URL;
     const page = `?page=${currentPage}`;
     const limit = `&limit=4`;
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
