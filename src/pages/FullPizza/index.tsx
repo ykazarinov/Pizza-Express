@@ -34,7 +34,7 @@ const FullPizza: React.FC = () => {
   React.useEffect(() => {
     async function fetchPizza() {
       try {
-        const { data } = await axios.get((process.env.MOCKAPI_URL as string) + id);
+        const { data } = await axios.get('https://63692f3815219b849611dc7a.mockapi.io/items/' + id);
         setPizza(data);
         // setActualType(data.types[0]);
         // setActualSize(options.sizes.indexOf(data.sizes[0]));
